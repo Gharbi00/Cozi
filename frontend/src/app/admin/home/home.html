@@ -1,0 +1,61 @@
+<div class="container-fluid admin-dashboard py-4">
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start mb-4 gap-3">
+    <div>
+      <p class="text-uppercase text-muted mb-1">Admin dashboard</p>
+      <h1 class="h3 mb-2">CoZi Admin Overview</h1>
+      <p class="text-muted mb-0">Track occupancy, revenue, bookings, and performance for coliving and coworking in one place.</p>
+    </div>
+    <div class="btn-toolbar gap-2">
+      <a routerLink="/admin/coliving" class="btn btn-primary">Coliving Dashboard</a>
+      <a routerLink="/admin/coworking" class="btn btn-outline-primary">Coworking Dashboard</a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-3 col-md-6 mb-4" *ngFor="let card of overviewCards">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h6 class="text-uppercase text-muted mb-3">{{ card.title }}</h6>
+          <h2 class="mb-3">{{ card.value }}</h2>
+          <p class="mb-0 text-muted">{{ card.detail }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4 mb-4" *ngFor="let item of progressItems">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h6 class="mb-0">{{ item.title }}</h6>
+            <span class="fw-bold">{{ item.value }}</span>
+          </div>
+          <div class="progress" style="height: 8px;">
+            <div class="progress-bar {{ item.variant }}" style="width: {{ item.progress }}%;" aria-valuenow="{{ item.progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-8 mb-4">
+      <div class="card shadow-sm h-100">
+        <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+          <h6 class="mb-0">Latest activity</h6>
+          <span class="text-muted small">Live feed</span>
+        </div>
+        <div class="list-group list-group-flush">
+          <div class="list-group-item" *ngFor="let activity of latestActivity">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h6 class="mb-1">{{ activity.type }}</h6>
+                <p class="mb-0 text-muted">{{ activity.detail }}</p>
+              </div>
+              <small class="text-muted">{{ activity.time }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

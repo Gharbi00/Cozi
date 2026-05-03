@@ -1,0 +1,112 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "npm"
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "frontend": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular/build:application",
+          "options": {
+            "browser": "src/main.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets"
+              },
+              {
+                "glob": "favicon.ico",
+                "input": "src"
+              }
+            ],
+        "styles": [
+          "src/styles.scss",
+          "src/assets/css/style.css",
+          "src/assets/css/plugins/all.min.css",
+          "src/assets/css/plugins/flaticon.css",
+          "src/assets/css/plugins/bootstrap.min.css",
+          "src/assets/css/plugins/swiper-bundle.min.css",
+          "src/assets/css/plugins/aos.css",
+          "src/assets/css/plugins/magnific-popup.css",
+          "src/assets/css/plugins/lightbox.min.css",
+          "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.carousel.min.css",
+          "node_modules/ngx-owl-carousel-o/lib/styles/prebuilt-themes/owl.theme.default.min.css",
+          "node_modules/aos/dist/aos.css"
+        ],
+        "scripts": [
+          "src/assets/js/vendor/jquery-1.12.4.min.js",
+          "src/assets/js/vendor/modernizr-3.11.2.min.js",
+          "src/assets/js/plugins/popper.min.js",
+          "src/assets/js/plugins/bootstrap.min.js",
+          "src/assets/js/plugins/swiper-bundle.min.js",
+          "src/assets/js/plugins/aos.js",
+          "src/assets/js/plugins/waypoints.min.js",
+          "src/assets/js/plugins/back-to-top.js",
+          "src/assets/js/plugins/jquery.counterup.min.js",
+          "src/assets/js/plugins/appear.min.js",
+          "src/assets/js/plugins/jquery.magnific-popup.min.js",
+          "src/assets/js/plugins/lightbox.min.js",
+          "src/assets/js/plugins/gijgo.min.js"
+        ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular/build:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "frontend:build:production"
+            },
+            "development": {
+              "buildTarget": "frontend:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test"
+        }
+      }
+    }
+  }
+}

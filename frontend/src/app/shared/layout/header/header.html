@@ -1,0 +1,53 @@
+<div id="header" class="section exvent-header-2 exvent-header-4 sticky">
+    <div class="container">
+        <div class="header-wrap d-flex align-items-center justify-content-between">
+            <div class="header-logo">
+                <a routerLink=""><img src="images/updated/cozi-small-logo.webp" style="    width: 50%;" alt="CoZi" /></a>
+            </div>
+            <div class="header-menu d-none d-lg-block">
+                <ul class="main-menu">
+                    <li><a [routerLink]="['/']">Home</a></li>
+                    <li><a routerLink="/about">About</a></li>
+                    <li><a routerLink="/coworking">Coworking</a></li>
+                    <li><a routerLink="/coliving">Coliving</a></li>
+                    <li><a routerLink="/experiences">Experiences</a></li>
+                    <li><a routerLink="/locations">Locations</a></li>
+                    <li><a routerLink="/blog">Blog</a></li>
+                    <li><a routerLink="/contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="header-btn d-none d-xl-block">
+                <a class="btn" routerLink="/contact">Book Now</a>
+            </div>
+            <div class="header-toggle d-lg-none">
+                <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" type="button">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="offcanvas offcanvas-start" id="offcanvasExample">
+    <div class="offcanvas-header">
+        <div class="offcanvas-logo">
+            <a routerLink="/"><img src="assets/images/logo/logo.png" alt="CoZi" /></a>
+        </div>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="offcanvas-menu">
+            <ul class="main-menu">
+                <li><a routerLink="/" data-bs-dismiss="offcanvas">Home</a></li>
+                <li><a routerLink="/about" data-bs-dismiss="offcanvas">About</a></li>
+                <li><a routerLink="/coworking" data-bs-dismiss="offcanvas">Coworking</a></li>
+                <li><a routerLink="/coliving" data-bs-dismiss="offcanvas">Coliving</a></li>
+                <li><a routerLink="/experiences" data-bs-dismiss="offcanvas">Experiences</a></li>
+                <li><a routerLink="/locations" data-bs-dismiss="offcanvas">Locations</a></li>
+                <li><a routerLink="/blog" data-bs-dismiss="offcanvas">Blog</a></li>
+                <li><a routerLink="/contact" data-bs-dismiss="offcanvas">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</div>

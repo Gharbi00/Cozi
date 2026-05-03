@@ -1,0 +1,31 @@
+/* You can add global styles to this file, and also import other style files */
+html {
+    scroll-behavior: smooth;
+}
+
+.btn:hover {
+    color: white !important;
+}
+
+a {
+    text-decoration: none!important;
+}
+.white {
+    color: white;
+}
+
+.exvent-hero-section {
+    z-index: auto!important;
+}
+
+.exvent-hero-section .shape-1 ,.exvent-hero-section .shape-2 {
+    opacity: 0.4;
+}
+.btn{
+    border-radius: 0px!important;
+}
+
+.pricing-area-2 .price-card .price-body {
+    padding: 5px 0!important;
+    background-color: #ffffff;
+}
