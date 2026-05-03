@@ -1,18 +1,27 @@
-.admin-dashboard {
+.admin-layout {
   min-height: 100vh;
 }
 
-.admin-dashboard .card {
+.admin-sidebar .nav-link {
+  color: #495057;
+}
+
+.admin-sidebar .nav-link.active,
+.admin-sidebar .nav-link:hover {
+  background-color: #f8f9fa;
+  border-radius: 0.5rem;
+}
+
+.admin-sidebar .card {
   border: none;
   border-radius: 1rem;
 }
 
-.admin-dashboard h1,
-.admin-dashboard h2,
-.admin-dashboard h6 {
-  color: #212529;
+.admin-content .card {
+  border: none;
+  border-radius: 1rem;
 }
 
-.admin-dashboard p {
-  color: #6c757d;
+.admin-page-footer {
+  font-size: 0.9rem;
 }

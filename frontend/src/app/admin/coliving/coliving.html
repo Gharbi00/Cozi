@@ -1,82 +1,111 @@
-<div class="container-fluid admin-dashboard py-4">
-  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
-    <div>
-      <p class="text-uppercase text-muted mb-1">Coliving admin</p>
-      <h1 class="h3 mb-2">Coliving dashboard</h1>
-      <p class="text-muted mb-0">Manage occupancy, revenue, and guest bookings for your coliving spaces.</p>
-    </div>
-    <div class="btn-toolbar gap-2">
-      <a routerLink="/admin" class="btn btn-outline-secondary">Main admin</a>
-      <a routerLink="/admin/coworking" class="btn btn-outline-primary">Switch to coworking</a>
-    </div>
-  </div>
-
+<div class="container-fluid admin-layout py-4">
   <div class="row">
-    <div class="col-xl-3 col-md-6 mb-4" *ngFor="let stat of stats">
-      <div class="card shadow-sm h-100">
+    <aside class="col-lg-3 mb-4 admin-sidebar">
+      <div class="card shadow-sm mb-4">
         <div class="card-body">
-          <small class="text-uppercase text-muted">{{ stat.label }}</small>
-          <h3 class="mt-3 mb-2">{{ stat.value }}</h3>
-          <div class="progress" style="height: 8px;">
-            <div class="progress-bar {{ stat.variant }}" style="width: {{ stat.progress }}%;" aria-valuenow="{{ stat.progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+          <h5 class="card-title mb-3">Admin navigation</h5>
+          <nav class="nav flex-column">
+            <a routerLink="/admin" class="nav-link">Overview</a>
+            <a routerLink="/admin/coliving" class="nav-link active">Coliving</a>
+            <a routerLink="/admin/coworking" class="nav-link">Coworking</a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h6 class="mb-3">Quick actions</h6>
+          <a routerLink="/admin" class="btn btn-outline-secondary btn-sm mb-2 w-100">Admin overview</a>
+          <a routerLink="/admin/coworking" class="btn btn-outline-primary btn-sm w-100">Coworking dashboard</a>
+        </div>
+      </div>
+    </aside>
+
+    <section class="col-lg-9 admin-content">
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
+        <div>
+          <p class="text-uppercase text-muted mb-1">Coliving admin</p>
+          <h1 class="h3 mb-2">Coliving dashboard</h1>
+          <p class="text-muted mb-0">Manage occupancy, revenue, and guest bookings for your coliving spaces.</p>
+        </div>
+        <div class="btn-toolbar gap-2">
+          <a routerLink="/admin" class="btn btn-outline-secondary">Main admin</a>
+          <a routerLink="/admin/coworking" class="btn btn-outline-primary">Switch to coworking</a>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xl-3 col-md-6 mb-4" *ngFor="let stat of stats">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <small class="text-uppercase text-muted">{{ stat.label }}</small>
+              <h3 class="mt-3 mb-2">{{ stat.value }}</h3>
+              <div class="progress" style="height: 8px;">
+                <div class="progress-bar {{ stat.variant }}" style="width: {{ stat.progress }}%;" aria-valuenow="{{ stat.progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="row">
-    <div class="col-xl-7 mb-4">
-      <div class="card shadow-sm h-100">
-        <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
-          <h6 class="mb-0">Upcoming bookings</h6>
-          <span class="text-muted small">Latest 3 entries</span>
+      <div class="row">
+        <div class="col-xl-7 mb-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-header bg-white border-bottom d-flex justify-content-between align-items-center">
+              <h6 class="mb-0">Upcoming bookings</h6>
+              <span class="text-muted small">Latest 3 entries</span>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Guest</th>
+                    <th>Unit</th>
+                    <th>Check-in</th>
+                    <th>Nights</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let booking of bookings">
+                    <td>{{ booking.guest }}</td>
+                    <td>{{ booking.unit }}</td>
+                    <td>{{ booking.checkIn }}</td>
+                    <td>{{ booking.nights }}</td>
+                    <td>
+                      <span class="badge rounded-pill {{ booking.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark' }}">
+                        {{ booking.status }}
+                      </span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-        <div class="table-responsive">
-          <table class="table table-hover mb-0">
-            <thead class="table-light">
-              <tr>
-                <th>Guest</th>
-                <th>Unit</th>
-                <th>Check-in</th>
-                <th>Nights</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let booking of bookings">
-                <td>{{ booking.guest }}</td>
-                <td>{{ booking.unit }}</td>
-                <td>{{ booking.checkIn }}</td>
-                <td>{{ booking.nights }}</td>
-                <td>
-                  <span class="badge rounded-pill {{ booking.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark' }}">
-                    {{ booking.status }}
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+
+        <div class="col-xl-5 mb-4">
+          <div class="card shadow-sm h-100">
+            <div class="card-header bg-white border-bottom">
+              <h6 class="mb-0">Facility summary</h6>
+            </div>
+            <div class="card-body">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item" *ngFor="let metric of facilityMetrics">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <span>{{ metric.title }}</span>
+                    <strong>{{ metric.value }}</strong>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="col-xl-5 mb-4">
-      <div class="card shadow-sm h-100">
-        <div class="card-header bg-white border-bottom">
-          <h6 class="mb-0">Facility summary</h6>
-        </div>
-        <div class="card-body">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item" *ngFor="let metric of facilityMetrics">
-              <div class="d-flex justify-content-between align-items-center">
-                <span>{{ metric.title }}</span>
-                <strong>{{ metric.value }}</strong>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+      <footer class="admin-page-footer text-center text-muted py-3 mt-4 border-top">
+        CoZi Admin dashboard • © 2026
+      </footer>
+    </section>
   </div>
 </div>

@@ -1,5 +1,5 @@
-﻿<app-header></app-header>
-<main class="main-wrapper">
+﻿<app-header *ngIf="!isAdmin()"></app-header>
+<main class="main-wrapper" [class.admin-mode]="isAdmin()">
   <router-outlet></router-outlet>
 </main>
-<app-footer></app-footer>
+<app-footer *ngIf="!isAdmin()"></app-footer>

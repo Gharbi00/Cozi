@@ -7,21 +7,25 @@ import Aos from 'aos';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Header, Footer,RouterModule],
+  imports: [RouterOutlet, Header, Footer, RouterModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App  implements OnInit {
+export class App implements OnInit {
   protected readonly title = signal('Coziways');
+  protected readonly isAdmin = signal(false);
 
-  constructor(private readonly router: Router) {}
+  constructor(private readonly router: Router) {
+    this.isAdmin.set(this.router.url.startsWith('/admin'));
+  }
 
   ngOnInit(): void {
     Aos.init();
 
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd)
-    ).subscribe(() => {
+    ).subscribe((event) => {
+      this.isAdmin.set(event.urlAfterRedirects.startsWith('/admin'));
       window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
     });
   }
