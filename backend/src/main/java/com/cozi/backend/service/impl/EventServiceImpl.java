@@ -70,6 +70,12 @@ public class EventServiceImpl implements EventService {
         return mapToDto(eventRepository.save(event));
     }
 
+    @Override
+    public java.util.List<Long> getParticipantIds(Long eventId) {
+        Event event = eventRepository.findById(eventId).orElseThrow(() -> new ResourceNotFoundException("Event", "id", eventId));
+        return event.getParticipants().stream().map(User::getId).toList();
+    }
+
     private EventDto mapToDto(Event event) {
         EventDto dto = new EventDto();
         dto.setId(event.getId());
@@ -80,6 +86,7 @@ public class EventServiceImpl implements EventService {
         if (event.getPartner() != null) {
             dto.setPartnerId(event.getPartner().getId());
         }
+        dto.setParticipantIds(event.getParticipants().stream().map(User::getId).collect(java.util.stream.Collectors.toSet()));
         return dto;
     }
 

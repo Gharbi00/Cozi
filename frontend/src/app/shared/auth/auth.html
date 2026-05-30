@@ -1,0 +1,210 @@
+<!-- Auth Modal Trigger Button -->
+<button 
+  class="btn btn-auth icon-btn" 
+  (click)="openModal()"
+  title="Sign in or Register">
+  <svg width="24" height="24" viewBox="0 0 512 512" class="btn-icon" xmlns="http://www.w3.org/2000/svg">
+    <polygon fill="currentColor" points="237.61,331.547 271.554,365.5 347.11,289.946 381.054,256 347.11,222.054 271.554,146.5 237.61,180.453 289.164,232 0,232 0,280 289.164,280"/>
+    <polygon fill="currentColor" points="464,0 416,0 192,0 144,0 96,0 96,48 96,80 96,160 144,160 160,160 160,64 448,64 448,448 160,448 160,352 144,352 96,352 96,432 96,464 96,512 144,512 192,512 416,512 464,512 512,512 512,464 512,416 512,96 512,48 512,0"/>
+  </svg>
+</button>
+
+<!-- Auth Modal -->
+<div class="modal " #authModal id="authModal" tabindex="-1" aria-labelledby="authModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content auth-modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header border-0">
+        <h5 class="modal-title" id="authModalLabel">CoZi Authentication</h5>
+        <button 
+          type="button" 
+          class="btn-close" 
+          (click)="closeModal()"
+          aria-label="Close">
+        </button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Tab Navigation -->
+        <div class="auth-tabs mb-4">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation">
+              <button 
+                class="nav-link" 
+                [ngClass]="{ 'active': activeTab === 'login' }"
+                (click)="switchTab('login')"
+                type="button"
+                role="tab"
+                aria-selected="true">
+                Login
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button 
+                class="nav-link" 
+                [ngClass]="{ 'active': activeTab === 'register' }"
+                (click)="switchTab('register')"
+                type="button"
+                role="tab"
+                aria-selected="false">
+                Register
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button 
+                class="nav-link" 
+                [ngClass]="{ 'active': activeTab === 'forgot' }"
+                (click)="switchTab('forgot')"
+                type="button"
+                role="tab"
+                aria-selected="false">
+                Forgot Password
+              </button>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Tab Content -->
+        <div class="auth-tab-content">
+          <!-- Login Tab -->
+          <div *ngIf="activeTab === 'login'" class="tab-pane fade show active">
+            <form (ngSubmit)="onLogin()">
+              <div class="mb-3">
+                <label for="loginEmail" class="form-label">Email Address</label>
+                <input 
+                  type="email" 
+                  class="form-control" 
+                  id="loginEmail" 
+                  placeholder="Enter your email"
+                  [(ngModel)]="loginEmail"
+                  name="loginEmail"
+                  required>
+              </div>
+              <div class="mb-3">
+                <label for="loginPassword" class="form-label">Password</label>
+                <input 
+                  type="password" 
+                  class="form-control" 
+                  id="loginPassword" 
+                  placeholder="Enter your password"
+                  [(ngModel)]="loginPassword"
+                  name="loginPassword"
+                  required>
+              </div>
+              <div class="mb-3 form-check">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input" 
+                  id="loginRemember"
+                  [(ngModel)]="loginRemember"
+                  name="loginRemember">
+                <label class="form-check-label" for="loginRemember">
+                  Remember me
+                </label>
+              </div>
+              <button type="submit" class="btn btn-primary w-100 mb-3">
+                Sign In
+              </button>
+              <p class="text-center text-muted small">
+                Don't have an account? <a href="#" (click)="switchTab('register')" class="text-decoration-none">Register here</a>
+              </p>
+            </form>
+          </div>
+
+          <!-- Register Tab -->
+          <div *ngIf="activeTab === 'register'" class="tab-pane fade show active">
+            <form (ngSubmit)="onRegister()">
+              <div class="mb-3">
+                <label for="registerName" class="form-label">Full Name</label>
+                <input 
+                  type="text" 
+                  class="form-control" 
+                  id="registerName" 
+                  placeholder="Enter your full name"
+                  [(ngModel)]="registerName"
+                  name="registerName"
+                  required>
+              </div>
+              <div class="mb-3">
+                <label for="registerEmail" class="form-label">Email Address</label>
+                <input 
+                  type="email" 
+                  class="form-control" 
+                  id="registerEmail" 
+                  placeholder="Enter your email"
+                  [(ngModel)]="registerEmail"
+                  name="registerEmail"
+                  required>
+              </div>
+              <div class="mb-3">
+                <label for="registerPassword" class="form-label">Password</label>
+                <input 
+                  type="password" 
+                  class="form-control" 
+                  id="registerPassword" 
+                  placeholder="Create a password"
+                  [(ngModel)]="registerPassword"
+                  name="registerPassword"
+                  required>
+              </div>
+              <div class="mb-3">
+                <label for="registerConfirmPassword" class="form-label">Confirm Password</label>
+                <input 
+                  type="password" 
+                  class="form-control" 
+                  id="registerConfirmPassword" 
+                  placeholder="Confirm your password"
+                  [(ngModel)]="registerConfirmPassword"
+                  name="registerConfirmPassword"
+                  required>
+              </div>
+              <div class="mb-3 form-check">
+                <input 
+                  type="checkbox" 
+                  class="form-check-input" 
+                  id="registerTerms"
+                  [(ngModel)]="registerTerms"
+                  name="registerTerms"
+                  required>
+                <label class="form-check-label" for="registerTerms">
+                  I agree to the <a href="#" class="text-decoration-none">Terms and Conditions</a>
+                </label>
+              </div>
+              <button type="submit" class="btn btn-success w-100 mb-3">
+                Register
+              </button>
+              <p class="text-center text-muted small">
+                Already have an account? <a href="#" (click)="switchTab('login')" class="text-decoration-none">Sign in here</a>
+              </p>
+            </form>
+          </div>
+
+          <!-- Forgot Password Tab -->
+          <div *ngIf="activeTab === 'forgot'" class="tab-pane fade show active">
+            <p class="text-muted mb-3">Enter your email address and we'll send you a link to reset your password.</p>
+            <form (ngSubmit)="onForgotPassword()">
+              <div class="mb-3">
+                <label for="forgotEmail" class="form-label">Email Address</label>
+                <input 
+                  type="email" 
+                  class="form-control" 
+                  id="forgotEmail" 
+                  placeholder="Enter your registered email"
+                  [(ngModel)]="forgotEmail"
+                  name="forgotEmail"
+                  required>
+              </div>
+              <button type="submit" class="btn btn-warning w-100 mb-3">
+                Send Reset Link
+              </button>
+              <p class="text-center text-muted small">
+                Remember your password? <a href="#" (click)="switchTab('login')" class="text-decoration-none">Sign in here</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

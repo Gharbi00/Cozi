@@ -4,10 +4,11 @@ import { filter } from 'rxjs';
 import { Header } from './shared/layout/header/header';
 import { Footer } from './shared/layout/footer/footer';
 import Aos from 'aos';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Header, Footer, RouterModule],
+  imports: [RouterOutlet, Header, Footer, RouterModule, CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })

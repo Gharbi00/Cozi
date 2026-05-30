@@ -2,6 +2,8 @@ package com.cozi.backend.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 public class EventDto {
     private Long id;
@@ -11,6 +13,7 @@ public class EventDto {
     private LocalDateTime startsAt;
     private LocalDateTime endsAt;
     private Long partnerId;
+    private Set<Long> participantIds = new HashSet<>();
 
     public EventDto() {
     }
@@ -61,5 +64,13 @@ public class EventDto {
 
     public void setPartnerId(Long partnerId) {
         this.partnerId = partnerId;
+    }
+
+    public Set<Long> getParticipantIds() {
+        return participantIds;
+    }
+
+    public void setParticipantIds(Set<Long> participantIds) {
+        this.participantIds = participantIds;
     }
 }

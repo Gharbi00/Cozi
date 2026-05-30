@@ -99,9 +99,15 @@ public class BookingServiceImpl implements BookingService {
         booking.setTotalPrice(dto.getTotalPrice());
         booking.setStatus(dto.getStatus() != null ? dto.getStatus() : "PENDING");
         if (dto.getBookingType() == BookingType.COWORKING) {
+            if (dto.getCoworkingId() == null) {
+                throw new BusinessException("Coworking ID must be provided for coworking bookings");
+            }
             Coworking coworking = coworkingRepository.findById(dto.getCoworkingId()).orElseThrow(() -> new ResourceNotFoundException("Coworking", "id", dto.getCoworkingId()));
             booking.setCoworking(coworking);
         } else if (dto.getBookingType() == BookingType.COLIVING) {
+            if (dto.getColivingId() == null) {
+                throw new BusinessException("Coliving ID must be provided for coliving bookings");
+            }
             Coliving coliving = colivingRepository.findById(dto.getColivingId()).orElseThrow(() -> new ResourceNotFoundException("Coliving", "id", dto.getColivingId()));
             booking.setColiving(coliving);
         }

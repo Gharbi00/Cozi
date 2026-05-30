@@ -53,4 +53,9 @@ public class EventController {
     public EventDto addParticipant(@PathVariable Long id, @RequestParam Long userId) {
         return eventService.addParticipant(id, userId);
     }
+
+    @GetMapping("/{id}/participants")
+    public java.util.List<Long> getParticipants(@PathVariable Long id) {
+        return eventService.getParticipantIds(id);
+    }
 }

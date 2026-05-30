@@ -1,0 +1,284 @@
+// Auth Button Style
+.btn-auth {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+
+  &:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+::ng-deep.modal-backdrop {
+  
+    z-index: 5!important;
+
+}
+
+// Auth Modal Content
+.auth-modal-content {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+
+  .modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 1.5rem;
+
+    .modal-title {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+
+    .btn-close {
+      filter: brightness(0) invert(1);
+      opacity: 0.8;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .modal-body {
+    padding: 2rem;
+    background-color: #f8f9fa;
+  }
+}
+
+// Auth Tabs
+.auth-tabs {
+  .nav-tabs {
+    border-bottom: 2px solid #e9ecef;
+    display: flex;
+    gap: 0.5rem;
+
+    .nav-item {
+      margin-bottom: 0;
+
+      .nav-link {
+        color: #6c757d;
+        border: none;
+        border-bottom: 3px solid transparent;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+
+        &:hover {
+          color: #667eea;
+          border-bottom-color: #667eea;
+        }
+
+        &.active {
+          color: #667eea;
+          border-bottom-color: #667eea;
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}
+
+// Tab Content
+.auth-tab-content {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  animation: fadeIn 0.3s ease-in-out;
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .tab-pane {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  form {
+    .form-label {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+      border: 1px solid #e0e0e0;
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+
+      &:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+      }
+
+      &::placeholder {
+        color: #adb5bd;
+      }
+    }
+
+    .form-check {
+      .form-check-input {
+        cursor: pointer;
+        border-color: #e0e0e0;
+        width: 1rem;
+        height: 1rem;
+
+        &:checked {
+          background-color: #667eea;
+          border-color: #667eea;
+        }
+
+        &:focus {
+          border-color: #667eea;
+          box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+      }
+
+      .form-check-label {
+        margin-left: 0.5rem;
+        cursor: pointer;
+
+        a {
+          color: #667eea;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: all 0.3s ease;
+      border: none;
+
+      &.btn-primary {
+        background-color: #667eea;
+        color: white;
+
+        &:hover {
+          background-color: #764ba2;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+
+      &.btn-success {
+        background-color: #28a745;
+        color: white;
+
+        &:hover {
+          background-color: #218838;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(40, 167, 69, 0.4);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+
+      &.btn-warning {
+        background-color: #ffc107;
+        color: #333;
+
+        &:hover {
+          background-color: #e0a800;
+          transform: translateY(-2px);
+          box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+        }
+
+        &:active {
+          transform: translateY(0);
+        }
+      }
+    }
+
+    p {
+      margin: 0;
+
+      a {
+        color: #667eea;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+// Responsive Design
+@media (max-width: 576px) {
+  .modal-dialog {
+    margin: 0.5rem;
+  }
+
+  .auth-modal-content {
+    .modal-body {
+      padding: 1.5rem;
+    }
+  }
+
+  .auth-tab-content {
+    padding: 1.5rem;
+
+    form {
+      .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .auth-tabs {
+    .nav-tabs {
+      .nav-item .nav-link {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.85rem;
+      }
+    }
+  }
+
+  .btn-auth {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-lg {
+    max-width: 95vw;
+  }
+}

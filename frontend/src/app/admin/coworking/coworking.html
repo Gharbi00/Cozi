@@ -29,6 +29,7 @@
           <p class="text-muted mb-0">Monitor seat usage, member plans, and room reservations for the coworking business.</p>
         </div>
         <div class="btn-toolbar gap-2">
+          <button type="button" class="btn btn-outline-light" (click)="createQuickReservation()">Add reservation</button>
           <a routerLink="/admin" class="btn btn-outline-secondary">Main admin</a>
           <a routerLink="/admin/coliving" class="btn btn-outline-primary">Switch to coliving</a>
         </div>
@@ -61,21 +62,28 @@
                   <tr>
                     <th>Client</th>
                     <th>Desk</th>
-                    <th>Date</th>
-                    <th>Hours</th>
+                    <th>From</th>
+                    <th>To</th>
                     <th>Status</th>
+                    <th class="text-end">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let reservation of reservations">
-                    <td>{{ reservation.client }}</td>
-                    <td>{{ reservation.desk }}</td>
-                    <td>{{ reservation.date }}</td>
-                    <td>{{ reservation.hours }}</td>
+                    <td>{{ reservation.userId }}</td>
+                    <td>{{ reservation.coworkingId }}</td>
+                    <td>{{ reservation.startDate }}</td>
+                    <td>{{ reservation.endDate }}</td>
                     <td>
                       <span class="badge rounded-pill {{ reservation.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark' }}">
                         {{ reservation.status }}
                       </span>
+                    </td>
+                    <td class="text-end">
+                      <button type="button" class="btn btn-sm btn-outline-light me-2" (click)="toggleReservationStatus(reservation)">
+                        {{ reservation.status === 'Confirmed' ? 'Mark Pending' : 'Confirm' }}
+                      </button>
+                      <button type="button" class="btn btn-sm btn-danger" (click)="deleteReservation(reservation)">Delete</button>
                     </td>
                   </tr>
                 </tbody>

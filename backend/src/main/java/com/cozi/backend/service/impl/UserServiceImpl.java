@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         Set<Role> roles = request.getRoles() == null || request.getRoles().isEmpty()
-                ? Set.of(Role.CUSTOMER)
+                ? new HashSet<>(Set.of(Role.CUSTOMER))
                 : new HashSet<>(request.getRoles());
         user.setRoles(roles);
         User saved = userRepository.save(user);

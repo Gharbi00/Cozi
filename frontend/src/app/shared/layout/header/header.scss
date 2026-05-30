@@ -1,0 +1,43 @@
+// Header Button Area
+.header-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  .btn-auth {
+    display: inline-block;
+  }
+
+  .btn {
+    padding: 0.5rem 1.5rem;
+    font-weight: 600;
+  }
+}
+
+// Offcanvas Auth Buttons
+.offcanvas-auth-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  .btn-auth {
+    width: 100%;
+  }
+}
+
+// Responsive adjustments
+@media (max-width: 1200px) {
+  .header-btn {
+    gap: 0.5rem;
+
+    .btn-auth {
+      padding: 0.4rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      padding: 0.4rem 1rem;
+      font-size: 0.9rem;
+    }
+  }
+}

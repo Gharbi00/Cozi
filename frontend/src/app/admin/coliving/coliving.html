@@ -29,6 +29,7 @@
           <p class="text-muted mb-0">Manage occupancy, revenue, and guest bookings for your coliving spaces.</p>
         </div>
         <div class="btn-toolbar gap-2">
+          <button type="button" class="btn btn-outline-light" (click)="createQuickBooking()">Add booking</button>
           <a routerLink="/admin" class="btn btn-outline-secondary">Main admin</a>
           <a routerLink="/admin/coworking" class="btn btn-outline-primary">Switch to coworking</a>
         </div>
@@ -62,20 +63,27 @@
                     <th>Guest</th>
                     <th>Unit</th>
                     <th>Check-in</th>
-                    <th>Nights</th>
+                    <th>Check-out</th>
                     <th>Status</th>
+                    <th class="text-end">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngFor="let booking of bookings">
-                    <td>{{ booking.guest }}</td>
-                    <td>{{ booking.unit }}</td>
-                    <td>{{ booking.checkIn }}</td>
-                    <td>{{ booking.nights }}</td>
+                    <td>{{ booking.userId }}</td>
+                    <td>{{ booking.colivingId }}</td>
+                    <td>{{ booking.startDate }}</td>
+                    <td>{{ booking.endDate }}</td>
                     <td>
                       <span class="badge rounded-pill {{ booking.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark' }}">
                         {{ booking.status }}
                       </span>
+                    </td>
+                    <td class="text-end">
+                      <button type="button" class="btn btn-sm btn-outline-light me-2" (click)="toggleBookingStatus(booking)">
+                        {{ booking.status === 'Confirmed' ? 'Mark Pending' : 'Confirm' }}
+                      </button>
+                      <button type="button" class="btn btn-sm btn-danger" (click)="deleteBooking(booking)">Delete</button>
                     </td>
                   </tr>
                 </tbody>
