@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Booking.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cozi-backend</a> &gt; <a href="index.source.html" class="el_package">com.cozi.backend.entity</a> &gt; <span class="el_source">Booking.java</span></div><h1>Booking.java</h1><pre class="source lang-java linenums">package com.cozi.backend.entity;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = &quot;bookings&quot;)
+public class Booking {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;user_id&quot;)
+    private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;coworking_id&quot;)
+    private Coworking coworking;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;coliving_id&quot;)
+    private Coliving coliving;
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private BookingType bookingType;
+
+    private LocalDate startDate;
+    private LocalDate endDate;
+
+    private double totalPrice;
+
+    private String status;
+
+<span class="fc" id="L39">    public Booking() {</span>
+<span class="fc" id="L40">    }</span>
+
+    public Long getId() {
+<span class="fc" id="L43">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L47">        this.id = id;</span>
+<span class="fc" id="L48">    }</span>
+
+    public User getUser() {
+<span class="fc" id="L51">        return user;</span>
+    }
+
+    public void setUser(User user) {
+<span class="fc" id="L55">        this.user = user;</span>
+<span class="fc" id="L56">    }</span>
+
+    public Coworking getCoworking() {
+<span class="fc" id="L59">        return coworking;</span>
+    }
+
+    public void setCoworking(Coworking coworking) {
+<span class="fc" id="L63">        this.coworking = coworking;</span>
+<span class="fc" id="L64">    }</span>
+
+    public Coliving getColiving() {
+<span class="fc" id="L67">        return coliving;</span>
+    }
+
+    public void setColiving(Coliving coliving) {
+<span class="nc" id="L71">        this.coliving = coliving;</span>
+<span class="nc" id="L72">    }</span>
+
+    public BookingType getBookingType() {
+<span class="fc" id="L75">        return bookingType;</span>
+    }
+
+    public void setBookingType(BookingType bookingType) {
+<span class="fc" id="L79">        this.bookingType = bookingType;</span>
+<span class="fc" id="L80">    }</span>
+
+    public LocalDate getStartDate() {
+<span class="fc" id="L83">        return startDate;</span>
+    }
+
+    public void setStartDate(LocalDate startDate) {
+<span class="fc" id="L87">        this.startDate = startDate;</span>
+<span class="fc" id="L88">    }</span>
+
+    public LocalDate getEndDate() {
+<span class="fc" id="L91">        return endDate;</span>
+    }
+
+    public void setEndDate(LocalDate endDate) {
+<span class="fc" id="L95">        this.endDate = endDate;</span>
+<span class="fc" id="L96">    }</span>
+
+    public double getTotalPrice() {
+<span class="fc" id="L99">        return totalPrice;</span>
+    }
+
+    public void setTotalPrice(double totalPrice) {
+<span class="fc" id="L103">        this.totalPrice = totalPrice;</span>
+<span class="fc" id="L104">    }</span>
+
+    public String getStatus() {
+<span class="fc" id="L107">        return status;</span>
+    }
+
+    public void setStatus(String status) {
+<span class="fc" id="L111">        this.status = status;</span>
+<span class="fc" id="L112">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

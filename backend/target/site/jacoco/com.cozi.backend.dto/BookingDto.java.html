@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookingDto.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cozi-backend</a> &gt; <a href="index.source.html" class="el_package">com.cozi.backend.dto</a> &gt; <span class="el_source">BookingDto.java</span></div><h1>BookingDto.java</h1><pre class="source lang-java linenums">package com.cozi.backend.dto;
+
+import com.cozi.backend.entity.BookingType;
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
+
+public class BookingDto {
+    private Long id;
+    @NotNull
+    private Long userId;
+    private Long coworkingId;
+    private Long colivingId;
+    @NotNull
+    private BookingType bookingType;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private double totalPrice;
+    private String status;
+
+<span class="fc" id="L20">    public BookingDto() {</span>
+<span class="fc" id="L21">    }</span>
+
+    public Long getId() {
+<span class="fc" id="L24">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L28">        this.id = id;</span>
+<span class="fc" id="L29">    }</span>
+
+    public Long getUserId() {
+<span class="fc" id="L32">        return userId;</span>
+    }
+
+    public void setUserId(Long userId) {
+<span class="fc" id="L36">        this.userId = userId;</span>
+<span class="fc" id="L37">    }</span>
+
+    public Long getCoworkingId() {
+<span class="fc" id="L40">        return coworkingId;</span>
+    }
+
+    public void setCoworkingId(Long coworkingId) {
+<span class="fc" id="L44">        this.coworkingId = coworkingId;</span>
+<span class="fc" id="L45">    }</span>
+
+    public Long getColivingId() {
+<span class="fc" id="L48">        return colivingId;</span>
+    }
+
+    public void setColivingId(Long colivingId) {
+<span class="fc" id="L52">        this.colivingId = colivingId;</span>
+<span class="fc" id="L53">    }</span>
+
+    public BookingType getBookingType() {
+<span class="fc" id="L56">        return bookingType;</span>
+    }
+
+    public void setBookingType(BookingType bookingType) {
+<span class="fc" id="L60">        this.bookingType = bookingType;</span>
+<span class="fc" id="L61">    }</span>
+
+    public LocalDate getStartDate() {
+<span class="fc" id="L64">        return startDate;</span>
+    }
+
+    public void setStartDate(LocalDate startDate) {
+<span class="fc" id="L68">        this.startDate = startDate;</span>
+<span class="fc" id="L69">    }</span>
+
+    public LocalDate getEndDate() {
+<span class="fc" id="L72">        return endDate;</span>
+    }
+
+    public void setEndDate(LocalDate endDate) {
+<span class="fc" id="L76">        this.endDate = endDate;</span>
+<span class="fc" id="L77">    }</span>
+
+    public double getTotalPrice() {
+<span class="fc" id="L80">        return totalPrice;</span>
+    }
+
+    public void setTotalPrice(double totalPrice) {
+<span class="fc" id="L84">        this.totalPrice = totalPrice;</span>
+<span class="fc" id="L85">    }</span>
+
+    public String getStatus() {
+<span class="fc" id="L88">        return status;</span>
+    }
+
+    public void setStatus(String status) {
+<span class="fc" id="L92">        this.status = status;</span>
+<span class="fc" id="L93">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

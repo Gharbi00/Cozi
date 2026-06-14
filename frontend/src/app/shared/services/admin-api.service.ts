@@ -12,14 +12,15 @@ export interface PagedResponse<T> {
 
 export interface BookingDto {
   id?: number;
-  userId: number;
+  userId?: number;
   coworkingId?: number;
   colivingId?: number;
   bookingType: 'COWORKING' | 'COLIVING';
   startDate: string;
   endDate: string;
   totalPrice: number;
-  status: string;
+  notes?: string;
+  status?: string;
 }
 
 export interface ColivingDto {
@@ -36,6 +37,24 @@ export interface CoworkingDto {
   location?: string;
 }
 
+export interface UserDto {
+  id?: number;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  roles?: string[];
+}
+
+export interface EventDto {
+  id?: number;
+  title?: string;
+  description?: string;
+  startsAt?: string;
+  endsAt?: string;
+  partnerId?: number;
+  participantIds?: number[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -46,6 +65,10 @@ export class AdminApiService {
 
   getBookings(page = 0, size = 20): Observable<PagedResponse<BookingDto>> {
     return this.http.get<PagedResponse<BookingDto>>(`${this.apiUrl}/bookings?page=${page}&size=${size}`);
+  }
+
+  getBookingsByUser(userId: number, page = 0, size = 50): Observable<PagedResponse<BookingDto>> {
+    return this.http.get<PagedResponse<BookingDto>>(`${this.apiUrl}/bookings/user/${userId}?page=${page}&size=${size}`);
   }
 
   createBooking(booking: BookingDto) {
@@ -90,5 +113,32 @@ export class AdminApiService {
 
   deleteCoworking(id: number) {
     return this.http.delete<void>(`${this.apiUrl}/coworking/${id}`);
+  }
+
+  // Users
+  getUsers(page = 0, size = 50): Observable<PagedResponse<UserDto>> {
+    return this.http.get<PagedResponse<UserDto>>(`${this.apiUrl}/users?page=${page}&size=${size}`);
+  }
+
+  getUser(id: number) {
+    return this.http.get<UserDto>(`${this.apiUrl}/users/${id}`);
+  }
+
+  updateUser(id: number, user: UserDto) {
+    return this.http.put<UserDto>(`${this.apiUrl}/users/${id}`, user);
+  }
+
+  deleteUser(id: number) {
+    return this.http.delete<void>(`${this.apiUrl}/users/${id}`);
+  }
+
+  // Create user via auth register endpoint
+  createUser(registerPayload: { firstName: string; lastName: string; email: string; password: string; roles?: string[] }) {
+    return this.http.post<UserDto>(`${this.apiUrl}/auth/register`, registerPayload);
+  }
+
+  // Events
+  getEvents(page = 0, size = 100) {
+    return this.http.get<PagedResponse<EventDto>>(`${this.apiUrl}/events?page=${page}&size=${size}`);
   }
 }

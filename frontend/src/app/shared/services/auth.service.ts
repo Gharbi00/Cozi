@@ -4,6 +4,9 @@ import { Observable } from 'rxjs';
 
 export interface AuthResponse {
   token: string;
+  tokenType?: string;
+  roles?: string[];
+  userId?: number;
 }
 
 export interface AuthRequest {

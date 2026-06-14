@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AdminApiService, BookingDto } from '../../shared/services/admin-api.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-coliving',
@@ -51,7 +52,26 @@ export class Coliving implements OnInit {
       status: 'Pending',
     };
 
-    this.adminApi.createBooking(booking).subscribe(() => this.loadBookings());
+    this.adminApi.createBooking(booking).subscribe({
+      next: () => {
+        this.loadBookings();
+        Swal.fire({
+          icon: 'success',
+          title: 'Booking created',
+          text: 'The coliving booking was created successfully.',
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      },
+      error: (error) => {
+        console.error('Quick booking failed', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Create failed',
+          text: 'Unable to create quick booking. Please try again.',
+        });
+      },
+    });
   }
 
   protected toggleBookingStatus(booking: BookingDto): void {
@@ -64,7 +84,26 @@ export class Coliving implements OnInit {
       status: booking.status === 'Confirmed' ? 'Pending' : 'Confirmed',
     };
 
-    this.adminApi.updateBooking(booking.id, updated).subscribe(() => this.loadBookings());
+    this.adminApi.updateBooking(booking.id, updated).subscribe({
+      next: () => {
+        this.loadBookings();
+        Swal.fire({
+          icon: 'success',
+          title: 'Booking updated',
+          text: 'The booking status has been updated.',
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      },
+      error: (error) => {
+        console.error('Booking update failed', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Update failed',
+          text: 'Unable to update booking status. Please try again.',
+        });
+      },
+    });
   }
 
   protected deleteBooking(booking: BookingDto): void {
@@ -72,6 +111,35 @@ export class Coliving implements OnInit {
       return;
     }
 
-    this.adminApi.deleteBooking(booking.id).subscribe(() => this.loadBookings());
+    Swal.fire({
+      title: 'Delete booking?',
+      text: 'This booking will be removed permanently.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+      this.adminApi.deleteBooking(booking.id!).subscribe({
+        next: () => {
+          this.loadBookings();
+          Swal.fire({
+            icon: 'success',
+            title: 'Booking deleted',
+            text: 'The booking has been deleted.',
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        },
+        error: (error) => {
+          console.error('Booking deletion failed', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Delete failed',
+            text: 'Unable to delete booking. Please try again.',
+          });
+        },
+      });
+    });
   }
 }

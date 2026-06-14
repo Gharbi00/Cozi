@@ -1,0 +1,168 @@
+.admin-sidebar .nav-link.active{font-weight:600}
+.user-accordion h6{margin-top:0}
+.user-accordion .list-group-item{border:0;padding:6px 8px}
+.table-hover tbody tr:hover{background:#f8f9fa}
+.admin-layout {
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, rgba(79, 124, 255, 0.12), transparent 24%),
+              linear-gradient(180deg, #0e1320 0%, #151d2b 100%);
+  color: #e8eef7;
+}
+
+.admin-sidebar {
+  background: transparent;
+}
+
+.admin-sidebar .card {
+  background: #171f2d;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1.25rem;
+  box-shadow: 0 20px 45px rgba(3, 13, 29, 0.2);
+}
+
+.admin-sidebar .card-body {
+  padding: 1.5rem;
+}
+
+.admin-sidebar .card-title,
+.admin-sidebar h5,
+.admin-sidebar h6 {
+  color: #c8d5ee;
+}
+
+.admin-sidebar .nav-link {
+  color: #b8c8df;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  transition: all 0.25s ease;
+}
+
+.admin-sidebar .nav-link.active,
+.admin-sidebar .nav-link:hover {
+  color: #ffffff;
+  background-color: rgba(79, 124, 255, 0.18);
+  border-left: 4px solid #4f7cff;
+  margin-left: -4px;
+}
+
+.admin-sidebar .btn-outline-primary,
+.admin-sidebar .btn-outline-secondary {
+  border-width: 1px;
+}
+
+.admin-sidebar .btn-outline-primary {
+  color: #adc7ff;
+  border-color: #3c61c8;
+}
+
+.admin-sidebar .btn-outline-primary:hover {
+  background-color: #3c61c8;
+  border-color: #3c61c8;
+  color: #ffffff;
+}
+
+.admin-sidebar .btn-outline-secondary {
+  color: #9aa5ba;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.admin-sidebar .btn-outline-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
+}
+
+.admin-content .card {
+  background: #1b2635;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 1.25rem;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.14);
+}
+
+.admin-content .card-header,
+.admin-content .card-header.bg-white {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.8) !important;
+  color: #e8eef7;
+}
+
+.admin-content .card-body {
+  color: #c9d5ea;
+}
+
+.admin-content h1,
+.admin-content h2,
+.admin-content h3,
+.admin-content h6 {
+  color: #f4f8ff;
+}
+
+.admin-content p,
+.admin-content small,
+.admin-content .text-muted {
+  color: #9aabc9;
+}
+
+.admin-content .btn-primary {
+  background-color: #4f7cff;
+  border-color: #4f7cff;
+  color: #ffffff;
+  box-shadow: 0 12px 22px rgba(79, 124, 255, 0.24);
+}
+
+.admin-content .btn-primary:hover,
+.admin-content .btn-primary:focus {
+  background-color: #3f6ce0;
+  border-color: #3f6ce0;
+}
+
+.admin-content .btn-outline-primary {
+  color: #b0c4ff;
+  border-color: rgba(79, 124, 255, 0.45);
+}
+
+.admin-content .btn-outline-primary:hover {
+  background-color: rgba(79, 124, 255, 0.14);
+  color: #ffffff;
+}
+
+.admin-content .progress {
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+.admin-content .progress-bar {
+  background-image: linear-gradient(90deg, #4f7cff, #7ea0ff);
+}
+
+.admin-content .table {
+  color: #e8eef7;
+}
+
+.admin-content .table th,
+.admin-content .table td {
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.admin-content .table thead th {
+  background: rgba(255, 255, 255, 0.04);
+  color: #b8c8dc;
+}
+
+.admin-content .table-hover tbody tr:hover {
+  background-color: rgba(79, 124, 255, 0.8);
+}
+
+.admin-content .list-group-item {
+  background: transparent;
+  color: #d4def1;
+  border-color: rgba(255, 255, 255, 0.8);
+}
+
+.admin-content .list-group-item:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.admin-page-footer {
+  font-size: 0.9rem;
+  color: #8c9ab6;
+  border-color: rgba(255, 255, 255, 0.8);
+}

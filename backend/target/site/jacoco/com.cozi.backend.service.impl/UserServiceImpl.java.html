@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cozi-backend</a> &gt; <a href="index.source.html" class="el_package">com.cozi.backend.service.impl</a> &gt; <span class="el_source">UserServiceImpl.java</span></div><h1>UserServiceImpl.java</h1><pre class="source lang-java linenums">package com.cozi.backend.service.impl;
+
+import com.cozi.backend.dto.RegisterRequest;
+import com.cozi.backend.dto.UserDto;
+import com.cozi.backend.entity.Role;
+import com.cozi.backend.entity.User;
+import com.cozi.backend.exception.BusinessException;
+import com.cozi.backend.exception.ResourceNotFoundException;
+import com.cozi.backend.repository.UserRepository;
+import com.cozi.backend.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+@Service
+@Transactional
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+<span class="nc" id="L28">    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {</span>
+<span class="nc" id="L29">        this.userRepository = userRepository;</span>
+<span class="nc" id="L30">        this.passwordEncoder = passwordEncoder;</span>
+<span class="nc" id="L31">    }</span>
+
+    @Override
+    public UserDto createUser(RegisterRequest request) {
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if (userRepository.existsByEmail(request.getEmail())) {</span>
+<span class="nc" id="L36">            throw new BusinessException(&quot;Email already registered&quot;);</span>
+        }
+<span class="nc" id="L38">        User user = new User();</span>
+<span class="nc" id="L39">        user.setFirstName(request.getFirstName());</span>
+<span class="nc" id="L40">        user.setLastName(request.getLastName());</span>
+<span class="nc" id="L41">        user.setEmail(request.getEmail());</span>
+<span class="nc" id="L42">        user.setPassword(passwordEncoder.encode(request.getPassword()));</span>
+<span class="nc bnc" id="L43" title="All 4 branches missed.">        Set&lt;Role&gt; roles = request.getRoles() == null || request.getRoles().isEmpty()</span>
+<span class="nc" id="L44">                ? new HashSet&lt;&gt;(Set.of(Role.CUSTOMER))</span>
+<span class="nc" id="L45">                : new HashSet&lt;&gt;(request.getRoles());</span>
+<span class="nc" id="L46">        user.setRoles(roles);</span>
+<span class="nc" id="L47">        User saved = userRepository.save(user);</span>
+<span class="nc" id="L48">        return mapToDto(saved);</span>
+    }
+
+    @Override
+    public Page&lt;UserDto&gt; getAllUsers(Pageable pageable) {
+<span class="nc" id="L53">        return userRepository.findAll(pageable).map(this::mapToDto);</span>
+    }
+
+    @Override
+    public UserDto getUserById(Long id) {
+<span class="nc" id="L58">        return mapToDto(userRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, id)));</span>
+    }
+
+    @Override
+    public UserDto updateUser(Long id, UserDto userDto) {
+<span class="nc" id="L63">        User user = userRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, id));</span>
+<span class="nc" id="L64">        user.setFirstName(userDto.getFirstName());</span>
+<span class="nc" id="L65">        user.setLastName(userDto.getLastName());</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        if (userDto.getRoles() != null) {</span>
+<span class="nc" id="L67">            user.setRoles(userDto.getRoles());</span>
+        }
+<span class="nc" id="L69">        User updated = userRepository.save(user);</span>
+<span class="nc" id="L70">        return mapToDto(updated);</span>
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+<span class="nc" id="L75">        User user = userRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, id));</span>
+<span class="nc" id="L76">        userRepository.delete(user);</span>
+<span class="nc" id="L77">    }</span>
+
+    @Override
+    public User findByEmail(String email) {
+<span class="nc" id="L81">        return userRepository.findByEmail(email).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;User&quot;, &quot;email&quot;, email));</span>
+    }
+
+    private UserDto mapToDto(User user) {
+<span class="nc" id="L85">        UserDto dto = new UserDto();</span>
+<span class="nc" id="L86">        dto.setId(user.getId());</span>
+<span class="nc" id="L87">        dto.setFirstName(user.getFirstName());</span>
+<span class="nc" id="L88">        dto.setLastName(user.getLastName());</span>
+<span class="nc" id="L89">        dto.setEmail(user.getEmail());</span>
+<span class="nc" id="L90">        dto.setRoles(user.getRoles());</span>
+<span class="nc" id="L91">        return dto;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

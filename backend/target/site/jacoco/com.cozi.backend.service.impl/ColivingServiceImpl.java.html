@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColivingServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cozi-backend</a> &gt; <a href="index.source.html" class="el_package">com.cozi.backend.service.impl</a> &gt; <span class="el_source">ColivingServiceImpl.java</span></div><h1>ColivingServiceImpl.java</h1><pre class="source lang-java linenums">package com.cozi.backend.service.impl;
+
+import com.cozi.backend.dto.ColivingDto;
+import com.cozi.backend.entity.Coliving;
+import com.cozi.backend.exception.ResourceNotFoundException;
+import com.cozi.backend.repository.ColivingRepository;
+import com.cozi.backend.service.ColivingService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class ColivingServiceImpl implements ColivingService {
+
+    private final ColivingRepository colivingRepository;
+
+<span class="nc" id="L19">    public ColivingServiceImpl(ColivingRepository colivingRepository) {</span>
+<span class="nc" id="L20">        this.colivingRepository = colivingRepository;</span>
+<span class="nc" id="L21">    }</span>
+
+    @Override
+    public ColivingDto createColiving(ColivingDto dto) {
+<span class="nc" id="L25">        return mapToDto(colivingRepository.save(mapToEntity(dto)));</span>
+    }
+
+    @Override
+    public Page&lt;ColivingDto&gt; getAllColiving(Pageable pageable) {
+<span class="nc" id="L30">        return colivingRepository.findAll(pageable).map(this::mapToDto);</span>
+    }
+
+    @Override
+    public ColivingDto getColivingById(Long id) {
+<span class="nc" id="L35">        return mapToDto(colivingRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Coliving&quot;, &quot;id&quot;, id)));</span>
+    }
+
+    @Override
+    public ColivingDto updateColiving(Long id, ColivingDto dto) {
+<span class="nc" id="L40">        Coliving entity = colivingRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Coliving&quot;, &quot;id&quot;, id));</span>
+<span class="nc" id="L41">        entity.setName(dto.getName());</span>
+<span class="nc" id="L42">        entity.setLocation(dto.getLocation());</span>
+<span class="nc" id="L43">        entity.setRooms(dto.getRooms());</span>
+<span class="nc" id="L44">        entity.setAvailable(dto.isAvailable());</span>
+<span class="nc" id="L45">        entity.setDescription(dto.getDescription());</span>
+<span class="nc" id="L46">        return mapToDto(colivingRepository.save(entity));</span>
+    }
+
+    @Override
+    public void deleteColiving(Long id) {
+<span class="nc" id="L51">        colivingRepository.delete(colivingRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Coliving&quot;, &quot;id&quot;, id)));</span>
+<span class="nc" id="L52">    }</span>
+
+    private ColivingDto mapToDto(Coliving entity) {
+<span class="nc" id="L55">        ColivingDto dto = new ColivingDto();</span>
+<span class="nc" id="L56">        dto.setId(entity.getId());</span>
+<span class="nc" id="L57">        dto.setName(entity.getName());</span>
+<span class="nc" id="L58">        dto.setLocation(entity.getLocation());</span>
+<span class="nc" id="L59">        dto.setRooms(entity.getRooms());</span>
+<span class="nc" id="L60">        dto.setAvailable(entity.isAvailable());</span>
+<span class="nc" id="L61">        dto.setDescription(entity.getDescription());</span>
+<span class="nc" id="L62">        return dto;</span>
+    }
+
+    private Coliving mapToEntity(ColivingDto dto) {
+<span class="nc" id="L66">        Coliving entity = new Coliving();</span>
+<span class="nc" id="L67">        entity.setName(dto.getName());</span>
+<span class="nc" id="L68">        entity.setLocation(dto.getLocation());</span>
+<span class="nc" id="L69">        entity.setRooms(dto.getRooms());</span>
+<span class="nc" id="L70">        entity.setAvailable(dto.isAvailable());</span>
+<span class="nc" id="L71">        entity.setDescription(dto.getDescription());</span>
+<span class="nc" id="L72">        return entity;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

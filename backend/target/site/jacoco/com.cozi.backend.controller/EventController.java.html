@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>EventController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cozi-backend</a> &gt; <a href="index.source.html" class="el_package">com.cozi.backend.controller</a> &gt; <span class="el_source">EventController.java</span></div><h1>EventController.java</h1><pre class="source lang-java linenums">package com.cozi.backend.controller;
+
+import com.cozi.backend.dto.EventDto;
+import com.cozi.backend.service.EventService;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(&quot;/api/events&quot;)
+public class EventController {
+
+    private final EventService eventService;
+
+<span class="nc" id="L18">    public EventController(EventService eventService) {</span>
+<span class="nc" id="L19">        this.eventService = eventService;</span>
+<span class="nc" id="L20">    }</span>
+
+    @GetMapping
+    public Page&lt;EventDto&gt; getAll(@RequestParam(defaultValue = &quot;0&quot;) int page,
+                                 @RequestParam(defaultValue = &quot;20&quot;) int size) {
+<span class="nc" id="L25">        Pageable pageable = PageRequest.of(page, size);</span>
+<span class="nc" id="L26">        return eventService.getAllEvents(pageable);</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public EventDto getById(@PathVariable Long id) {
+<span class="nc" id="L31">        return eventService.getEventById(id);</span>
+    }
+
+    @PostMapping
+    @PreAuthorize(&quot;hasRole('ADMIN') or hasRole('EMPLOYEE')&quot;)
+    public EventDto create(@Valid @RequestBody EventDto dto) {
+<span class="nc" id="L37">        return eventService.createEvent(dto);</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN') or hasRole('EMPLOYEE')&quot;)
+    public EventDto update(@PathVariable Long id, @Valid @RequestBody EventDto dto) {
+<span class="nc" id="L43">        return eventService.updateEvent(id, dto);</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    public void delete(@PathVariable Long id) {
+<span class="nc" id="L49">        eventService.deleteEvent(id);</span>
+<span class="nc" id="L50">    }</span>
+
+    @PostMapping(&quot;/{id}/participants&quot;)
+    public EventDto addParticipant(@PathVariable Long id, @RequestParam Long userId) {
+<span class="nc" id="L54">        return eventService.addParticipant(id, userId);</span>
+    }
+
+    @GetMapping(&quot;/{id}/participants&quot;)
+    public java.util.List&lt;Long&gt; getParticipants(@PathVariable Long id) {
+<span class="nc" id="L59">        return eventService.getParticipantIds(id);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

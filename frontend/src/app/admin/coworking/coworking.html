@@ -8,6 +8,8 @@
             <a routerLink="/admin" class="nav-link">Overview</a>
             <a routerLink="/admin/coliving" class="nav-link">Coliving</a>
             <a routerLink="/admin/coworking" class="nav-link active">Coworking</a>
+            <a routerLink="/admin/users" class="nav-link">Users</a>
+
           </nav>
         </div>
       </div>
@@ -26,10 +28,12 @@
         <div>
           <p class="text-uppercase text-muted mb-1">Coworking admin</p>
           <h1 class="h3 mb-2">Coworking dashboard</h1>
-          <p class="text-muted mb-0">Monitor seat usage, member plans, and room reservations for the coworking business.</p>
+          <p class="text-muted mb-0">Monitor seat usage, member plans, and room reservations for the coworking business.
+          </p>
         </div>
         <div class="btn-toolbar gap-2">
-          <button type="button" class="btn btn-outline-light" (click)="createQuickReservation()">Add reservation</button>
+          <button type="button" class="btn btn-outline-light" (click)="createQuickReservation()">Add
+            reservation</button>
           <a routerLink="/admin" class="btn btn-outline-secondary">Main admin</a>
           <a routerLink="/admin/coliving" class="btn btn-outline-primary">Switch to coliving</a>
         </div>
@@ -42,7 +46,8 @@
               <small class="text-uppercase text-muted">{{ stat.label }}</small>
               <h3 class="mt-3 mb-2">{{ stat.value }}</h3>
               <div class="progress" style="height: 8px;">
-                <div class="progress-bar {{ stat.variant }}" style="width: {{ stat.progress }}%;" aria-valuenow="{{ stat.progress }}" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="progress-bar {{ stat.variant }}" style="width: {{ stat.progress }}%;"
+                  aria-valuenow="{{ stat.progress }}" aria-valuemin="0" aria-valuemax="100"></div>
               </div>
             </div>
           </div>
@@ -75,15 +80,18 @@
                     <td>{{ reservation.startDate }}</td>
                     <td>{{ reservation.endDate }}</td>
                     <td>
-                      <span class="badge rounded-pill {{ reservation.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark' }}">
+                      <span
+                        class="badge rounded-pill {{ reservation.status === 'Confirmed' ? 'bg-success' : 'bg-warning text-dark' }}">
                         {{ reservation.status }}
                       </span>
                     </td>
                     <td class="text-end">
-                      <button type="button" class="btn btn-sm btn-outline-light me-2" (click)="toggleReservationStatus(reservation)">
+                      <button type="button" class="btn btn-sm btn-outline-light me-2"
+                        (click)="toggleReservationStatus(reservation)">
                         {{ reservation.status === 'Confirmed' ? 'Mark Pending' : 'Confirm' }}
                       </button>
-                      <button type="button" class="btn btn-sm btn-danger" (click)="deleteReservation(reservation)">Delete</button>
+                      <button type="button" class="btn btn-sm btn-danger"
+                        (click)="deleteReservation(reservation)">Delete</button>
                     </td>
                   </tr>
                 </tbody>

@@ -1,8 +1,9 @@
 <!-- Auth Modal Trigger Button -->
 <button 
   class="btn btn-auth icon-btn" 
-  (click)="openModal()"
-  title="Sign in or Register">
+  (click)="isLoggedIn ? logout() : openModal()"
+  [attr.title]="isLoggedIn ? 'Logout' : 'Sign in or Register'"
+  [attr.aria-label]="isLoggedIn ? 'Logout' : 'Sign in or Register'">
   <svg width="24" height="24" viewBox="0 0 512 512" class="btn-icon" xmlns="http://www.w3.org/2000/svg">
     <polygon fill="currentColor" points="237.61,331.547 271.554,365.5 347.11,289.946 381.054,256 347.11,222.054 271.554,146.5 237.61,180.453 289.164,232 0,232 0,280 289.164,280"/>
     <polygon fill="currentColor" points="464,0 416,0 192,0 144,0 96,0 96,48 96,80 96,160 144,160 160,160 160,64 448,64 448,448 160,448 160,352 144,352 96,352 96,432 96,464 96,512 144,512 192,512 416,512 464,512 512,512 512,464 512,416 512,96 512,48 512,0"/>

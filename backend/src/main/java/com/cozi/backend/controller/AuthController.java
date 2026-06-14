@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.stream.Collectors;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -38,9 +39,12 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         var principal = authentication.getPrincipal();
         String email = authentication.getName();
-        var roles = authentication.getAuthorities().stream().map(Object::toString).collect(Collectors.toList());
+        List<String> roles = authentication.getAuthorities().stream()
+            .map(a -> a.getAuthority().replace("ROLE_", ""))
+            .collect(Collectors.toList());
         String token = jwtUtils.generateToken(email, roles);
-        return ResponseEntity.ok(new AuthResponse(token));
+        var user = userService.findByEmail(loginRequest.getEmail());
+        return ResponseEntity.ok(new AuthResponse(token, roles, user.getId()));
     }
 
     @PostMapping("/register")

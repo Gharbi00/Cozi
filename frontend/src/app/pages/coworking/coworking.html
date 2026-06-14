@@ -167,12 +167,12 @@
         <div class="col-lg-3 col-sm-7">
           <div class="price-card text-center">
             <div class="price-header purple-bg">
-              <img src="images/shape/price_shape1.png" class="price-header-shape">
+              <img src="images/shape/price_shape1.png" class="price-header-shape" alt="price header shape">
               <span class="price-plan">Weekly</span>
               <h3 class="price-ammount">120 DT</h3>
             </div>
             <div class="price-body">
-              <img src="https://coziways.com/wp-content/uploads/2024/11/chelouech.jpg" class="img-fluid mb-3">
+              <img src="https://coziways.com/wp-content/uploads/2024/11/chelouech.jpg" class="img-fluid mb-3" alt="Chelouech coworking space">
               <ul class="price-desc">
                 <li>Coworking – Chelouech</li>
               </ul>
@@ -188,12 +188,12 @@
         <div class="col-lg-3 col-sm-7">
           <div class="price-card text-center">
             <div class="price-header pink-bg">
-              <img src="images/shape/price_shape1.png" class="price-header-shape">
+              <img src="images/shape/price_shape1.png" class="price-header-shape" alt="price header shape">
               <span class="price-plan">Monthly</span>
               <h3 class="price-ammount">260 DT</h3>
             </div>
             <div class="price-body">
-              <img src="https://coziways.com/wp-content/uploads/2024/11/weld-dar.jpg" class="img-fluid mb-3">
+              <img src="https://coziways.com/wp-content/uploads/2024/11/weld-dar.jpg" class="img-fluid mb-3" alt="Weld Eddar coworking space">
               <ul class="price-desc">
                 <li>Coworking – Weld Eddar</li>
               </ul>
@@ -209,12 +209,12 @@
         <div class="col-lg-3 col-sm-7">
           <div class="price-card text-center">
             <div class="price-header orange-bg">
-              <img src="images/shape/price_shape1.png" class="price-header-shape">
+              <img src="images/shape/price_shape1.png" class="price-header-shape" alt="price header shape">
               <span class="price-plan">Daily</span>
               <h3 class="price-ammount">30 DT</h3>
             </div>
             <div class="price-body">
-              <img src="https://coziways.com/wp-content/uploads/2024/11/talla.jpg" class="img-fluid mb-3">
+              <img src="https://coziways.com/wp-content/uploads/2024/11/talla.jpg" class="img-fluid mb-3" alt="Talla coworking space">
               <ul class="price-desc">
                 <li>Coworking – Talla</li>
               </ul>
@@ -230,12 +230,12 @@
         <div class="col-lg-3 col-sm-7">
           <div class="price-card text-center">
             <div class="price-header orange-bg">
-              <img src="images/shape/price_shape1.png" class="price-header-shape">
+              <img src="images/shape/price_shape1.png" class="price-header-shape" alt="price header shape">
               <span class="price-plan">Hourly</span>
               <h3 class="price-ammount">5 DT</h3>
             </div>
             <div class="price-body">
-              <img src="https://coziways.com/wp-content/uploads/2024/11/swi3a.jpg" class="img-fluid mb-3">
+              <img src="https://coziways.com/wp-content/uploads/2024/11/swi3a.jpg" class="img-fluid mb-3" alt="Swi3a coworking space">
               <ul class="price-desc">
                 <li>Coworking – Swi3a</li>
               </ul>
@@ -244,6 +244,47 @@
               <a href="https://coziways.com/product/coworking-swi3a/" target="_blank"
                 class="btn price-btn btn-orange">Book Now</a>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center mt-5">
+        <div class="col-lg-10">
+          <div class="section-title-wrap text-center mb-4">
+            <div class="section-title">
+              <h2 class="title orange">Reserve Your Workspace</h2>
+              <p>Choose a coworking spot and submit a booking request directly from CoZi.</p>
+            </div>
+          </div>
+          <div class="booking-form card p-4 shadow-sm">
+            <form (ngSubmit)="createBooking()" #bookingForm="ngForm">
+              <div class="mb-3">
+                <label class="form-label" for="workspaceSelect">Workspace</label>
+                <select id="workspaceSelect" class="form-select" [(ngModel)]="selectedSpotId" name="spot" required>
+                  <option [ngValue]="null">Select a workspace</option>
+                  <option *ngFor="let spot of coworkingSpots" [ngValue]="spot.id" [disabled]="!spot.available">
+                    {{ spot.name }} — {{ spot.location }} ({{ spot.available ? 'Available' : 'Unavailable' }})
+                  </option>
+                </select>
+              </div>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="bookingDate">Date</label>
+                  <input id="bookingDate" type="date" class="form-control" [(ngModel)]="bookingDate" name="date" required />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="bookingHours">Duration (hours)</label>
+                  <input id="bookingHours" type="number" class="form-control" [(ngModel)]="bookingHours" name="hours" min="1" required />
+                </div>
+              </div>
+              <div class="mb-3 mt-3">
+                <label class="form-label" for="bookingMessage">Message</label>
+                <textarea id="bookingMessage" class="form-control" aria-label="Booking message" [(ngModel)]="bookingMessage" name="message" rows="3" placeholder="Optional details for your booking"></textarea>
+              </div>
+              <div *ngIf="submitError" class="alert alert-danger">{{ submitError }}</div>
+              <div *ngIf="submitSuccess" class="alert alert-success">Your coworking booking request has been submitted.</div>
+              <button type="submit" class="btn btn-orange" [disabled]="isSubmitting">{{ isSubmitting ? 'Submitting...' : 'Book Now' }}</button>
+            </form>
           </div>
         </div>
       </div>

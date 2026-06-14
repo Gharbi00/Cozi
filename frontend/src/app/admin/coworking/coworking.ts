@@ -2,6 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AdminApiService, BookingDto } from '../../shared/services/admin-api.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-coworking',
@@ -51,7 +52,26 @@ export class Coworking implements OnInit {
       status: 'Pending',
     };
 
-    this.adminApi.createBooking(booking).subscribe(() => this.loadReservations());
+    this.adminApi.createBooking(booking).subscribe({
+      next: () => {
+        this.loadReservations();
+        Swal.fire({
+          icon: 'success',
+          title: 'Reservation created',
+          text: 'The coworking reservation was created successfully.',
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      },
+      error: (error) => {
+        console.error('Quick reservation failed', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Create failed',
+          text: 'Unable to create quick reservation. Please try again.',
+        });
+      },
+    });
   }
 
   protected toggleReservationStatus(reservation: BookingDto): void {
@@ -64,7 +84,26 @@ export class Coworking implements OnInit {
       status: reservation.status === 'Confirmed' ? 'Pending' : 'Confirmed',
     };
 
-    this.adminApi.updateBooking(reservation.id, updated).subscribe(() => this.loadReservations());
+    this.adminApi.updateBooking(reservation.id, updated).subscribe({
+      next: () => {
+        this.loadReservations();
+        Swal.fire({
+          icon: 'success',
+          title: 'Reservation updated',
+          text: 'The reservation status has been updated.',
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      },
+      error: (error) => {
+        console.error('Reservation update failed', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Update failed',
+          text: 'Unable to update reservation. Please try again.',
+        });
+      },
+    });
   }
 
   protected deleteReservation(reservation: BookingDto): void {
@@ -72,6 +111,35 @@ export class Coworking implements OnInit {
       return;
     }
 
-    this.adminApi.deleteBooking(reservation.id).subscribe(() => this.loadReservations());
+    Swal.fire({
+      title: 'Delete reservation?',
+      text: 'This reservation will be removed permanently.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel',
+    }).then((result) => {
+      if (!result.isConfirmed) return;
+      this.adminApi.deleteBooking(reservation.id!).subscribe({
+        next: () => {
+          this.loadReservations();
+          Swal.fire({
+            icon: 'success',
+            title: 'Reservation deleted',
+            text: 'The reservation has been deleted.',
+            timer: 1500,
+            showConfirmButton: false,
+          });
+        },
+        error: (error) => {
+          console.error('Reservation deletion failed', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Delete failed',
+            text: 'Unable to delete reservation. Please try again.',
+          });
+        },
+      });
+    });
   }
 }

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BookingServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cozi-backend</a> &gt; <a href="index.source.html" class="el_package">com.cozi.backend.service.impl</a> &gt; <span class="el_source">BookingServiceImpl.java</span></div><h1>BookingServiceImpl.java</h1><pre class="source lang-java linenums">package com.cozi.backend.service.impl;
+
+import com.cozi.backend.dto.BookingDto;
+import com.cozi.backend.entity.Booking;
+import com.cozi.backend.entity.BookingType;
+import com.cozi.backend.entity.Coliving;
+import com.cozi.backend.entity.Coworking;
+import com.cozi.backend.entity.User;
+import com.cozi.backend.exception.BusinessException;
+import com.cozi.backend.exception.ResourceNotFoundException;
+import com.cozi.backend.repository.BookingRepository;
+import com.cozi.backend.repository.ColivingRepository;
+import com.cozi.backend.repository.CoworkingRepository;
+import com.cozi.backend.repository.UserRepository;
+import com.cozi.backend.service.BookingService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+
+@Service
+@Transactional
+public class BookingServiceImpl implements BookingService {
+
+    private final BookingRepository bookingRepository;
+    private final UserRepository userRepository;
+    private final CoworkingRepository coworkingRepository;
+    private final ColivingRepository colivingRepository;
+
+<span class="fc" id="L32">    public BookingServiceImpl(BookingRepository bookingRepository, UserRepository userRepository, CoworkingRepository coworkingRepository, ColivingRepository colivingRepository) {</span>
+<span class="fc" id="L33">        this.bookingRepository = bookingRepository;</span>
+<span class="fc" id="L34">        this.userRepository = userRepository;</span>
+<span class="fc" id="L35">        this.coworkingRepository = coworkingRepository;</span>
+<span class="fc" id="L36">        this.colivingRepository = colivingRepository;</span>
+<span class="fc" id="L37">    }</span>
+
+    @Override
+    public BookingDto createBooking(BookingDto dto) {
+<span class="fc" id="L41">        Booking booking = mapToEntity(dto);</span>
+<span class="fc" id="L42">        validateAvailability(booking);</span>
+<span class="fc" id="L43">        booking.setStatus(&quot;CONFIRMED&quot;);</span>
+<span class="fc" id="L44">        return mapToDto(bookingRepository.save(booking));</span>
+    }
+
+    @Override
+    public Page&lt;BookingDto&gt; getAllBookings(Pageable pageable) {
+<span class="nc" id="L49">        return bookingRepository.findAll(pageable).map(this::mapToDto);</span>
+    }
+
+    @Override
+    public BookingDto getBookingById(Long id) {
+<span class="nc" id="L54">        return mapToDto(bookingRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Booking&quot;, &quot;id&quot;, id)));</span>
+    }
+
+    @Override
+    public BookingDto updateBooking(Long id, BookingDto dto) {
+<span class="nc" id="L59">        Booking booking = bookingRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Booking&quot;, &quot;id&quot;, id));</span>
+<span class="nc" id="L60">        booking.setStartDate(dto.getStartDate());</span>
+<span class="nc" id="L61">        booking.setEndDate(dto.getEndDate());</span>
+<span class="nc" id="L62">        booking.setTotalPrice(dto.getTotalPrice());</span>
+<span class="nc" id="L63">        booking.setStatus(dto.getStatus());</span>
+<span class="nc" id="L64">        validateAvailability(booking);</span>
+<span class="nc" id="L65">        return mapToDto(bookingRepository.save(booking));</span>
+    }
+
+    @Override
+    public void deleteBooking(Long id) {
+<span class="nc" id="L70">        bookingRepository.delete(bookingRepository.findById(id).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Booking&quot;, &quot;id&quot;, id)));</span>
+<span class="nc" id="L71">    }</span>
+
+    @Override
+    public Page&lt;BookingDto&gt; getBookingsByUser(Long userId, Pageable pageable) {
+<span class="nc" id="L75">        return bookingRepository.findByUserId(userId, pageable).map(this::mapToDto);</span>
+    }
+
+    private BookingDto mapToDto(Booking booking) {
+<span class="fc" id="L79">        BookingDto dto = new BookingDto();</span>
+<span class="fc" id="L80">        dto.setId(booking.getId());</span>
+<span class="fc" id="L81">        dto.setUserId(booking.getUser().getId());</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">        dto.setCoworkingId(booking.getCoworking() != null ? booking.getCoworking().getId() : null);</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        dto.setColivingId(booking.getColiving() != null ? booking.getColiving().getId() : null);</span>
+<span class="fc" id="L84">        dto.setBookingType(booking.getBookingType());</span>
+<span class="fc" id="L85">        dto.setStartDate(booking.getStartDate());</span>
+<span class="fc" id="L86">        dto.setEndDate(booking.getEndDate());</span>
+<span class="fc" id="L87">        dto.setTotalPrice(booking.getTotalPrice());</span>
+<span class="fc" id="L88">        dto.setStatus(booking.getStatus());</span>
+<span class="fc" id="L89">        return dto;</span>
+    }
+
+    private Booking mapToEntity(BookingDto dto) {
+<span class="pc" id="L93">        User user = userRepository.findById(dto.getUserId()).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, dto.getUserId()));</span>
+<span class="fc" id="L94">        Booking booking = new Booking();</span>
+<span class="fc" id="L95">        booking.setUser(user);</span>
+<span class="fc" id="L96">        booking.setBookingType(dto.getBookingType());</span>
+<span class="fc" id="L97">        booking.setStartDate(dto.getStartDate());</span>
+<span class="fc" id="L98">        booking.setEndDate(dto.getEndDate());</span>
+<span class="fc" id="L99">        booking.setTotalPrice(dto.getTotalPrice());</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">        booking.setStatus(dto.getStatus() != null ? dto.getStatus() : &quot;PENDING&quot;);</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (dto.getBookingType() == BookingType.COWORKING) {</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">            if (dto.getCoworkingId() == null) {</span>
+<span class="nc" id="L103">                throw new BusinessException(&quot;Coworking ID must be provided for coworking bookings&quot;);</span>
+            }
+<span class="pc" id="L105">            Coworking coworking = coworkingRepository.findById(dto.getCoworkingId()).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Coworking&quot;, &quot;id&quot;, dto.getCoworkingId()));</span>
+<span class="fc" id="L106">            booking.setCoworking(coworking);</span>
+<span class="pc bnc" id="L107" title="All 2 branches missed.">        } else if (dto.getBookingType() == BookingType.COLIVING) {</span>
+<span class="nc bnc" id="L108" title="All 2 branches missed.">            if (dto.getColivingId() == null) {</span>
+<span class="nc" id="L109">                throw new BusinessException(&quot;Coliving ID must be provided for coliving bookings&quot;);</span>
+            }
+<span class="nc" id="L111">            Coliving coliving = colivingRepository.findById(dto.getColivingId()).orElseThrow(() -&gt; new ResourceNotFoundException(&quot;Coliving&quot;, &quot;id&quot;, dto.getColivingId()));</span>
+<span class="nc" id="L112">            booking.setColiving(coliving);</span>
+        }
+<span class="fc" id="L114">        return booking;</span>
+    }
+
+    private void validateAvailability(Booking booking) {
+<span class="fc" id="L118">        LocalDate start = booking.getStartDate();</span>
+<span class="fc" id="L119">        LocalDate end = booking.getEndDate();</span>
+<span class="pc bpc" id="L120" title="2 of 6 branches missed.">        if (start == null || end == null || end.isBefore(start)) {</span>
+<span class="fc" id="L121">            throw new BusinessException(&quot;Booking dates are invalid&quot;);</span>
+        }
+<span class="pc bpc" id="L123" title="2 of 4 branches missed.">        if (booking.getBookingType() == BookingType.COWORKING &amp;&amp; booking.getCoworking() != null) {</span>
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">            if (!booking.getCoworking().isAvailable()) {</span>
+<span class="nc" id="L125">                throw new BusinessException(&quot;Coworking space is not available&quot;);</span>
+            }
+<span class="fc" id="L127">            boolean overlap = !bookingRepository.findByCoworkingIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(</span>
+<span class="pc bpc" id="L128" title="1 of 2 branches missed.">                    booking.getCoworking().getId(), end, start).isEmpty();</span>
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">            if (overlap) {</span>
+<span class="nc" id="L130">                throw new BusinessException(&quot;Coworking space is already booked for this period&quot;);</span>
+            }
+        }
+<span class="pc bpc" id="L133" title="3 of 4 branches missed.">        if (booking.getBookingType() == BookingType.COLIVING &amp;&amp; booking.getColiving() != null) {</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">            if (!booking.getColiving().isAvailable()) {</span>
+<span class="nc" id="L135">                throw new BusinessException(&quot;Coliving space is not available&quot;);</span>
+            }
+<span class="nc" id="L137">            boolean overlap = !bookingRepository.findByColivingIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">                    booking.getColiving().getId(), end, start).isEmpty();</span>
+<span class="nc bnc" id="L139" title="All 2 branches missed.">            if (overlap) {</span>
+<span class="nc" id="L140">                throw new BusinessException(&quot;Coliving space is already booked for this period&quot;);</span>
+            }
+        }
+<span class="fc" id="L143">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

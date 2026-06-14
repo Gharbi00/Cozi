@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ColivingController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cozi-backend</a> &gt; <a href="index.source.html" class="el_package">com.cozi.backend.controller</a> &gt; <span class="el_source">ColivingController.java</span></div><h1>ColivingController.java</h1><pre class="source lang-java linenums">package com.cozi.backend.controller;
+
+import com.cozi.backend.dto.ColivingDto;
+import com.cozi.backend.service.ColivingService;
+import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping(&quot;/api/coliving&quot;)
+public class ColivingController {
+
+    private final ColivingService colivingService;
+
+<span class="nc" id="L18">    public ColivingController(ColivingService colivingService) {</span>
+<span class="nc" id="L19">        this.colivingService = colivingService;</span>
+<span class="nc" id="L20">    }</span>
+
+    @GetMapping
+    public Page&lt;ColivingDto&gt; getAll(@RequestParam(defaultValue = &quot;0&quot;) int page,
+                                    @RequestParam(defaultValue = &quot;20&quot;) int size) {
+<span class="nc" id="L25">        Pageable pageable = PageRequest.of(page, size);</span>
+<span class="nc" id="L26">        return colivingService.getAllColiving(pageable);</span>
+    }
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ColivingDto getById(@PathVariable Long id) {
+<span class="nc" id="L31">        return colivingService.getColivingById(id);</span>
+    }
+
+    @PostMapping
+    @PreAuthorize(&quot;hasRole('ADMIN') or hasRole('EMPLOYEE')&quot;)
+    public ColivingDto create(@Valid @RequestBody ColivingDto dto) {
+<span class="nc" id="L37">        return colivingService.createColiving(dto);</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN') or hasRole('EMPLOYEE')&quot;)
+    public ColivingDto update(@PathVariable Long id, @Valid @RequestBody ColivingDto dto) {
+<span class="nc" id="L43">        return colivingService.updateColiving(id, dto);</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    @PreAuthorize(&quot;hasRole('ADMIN')&quot;)
+    public void delete(@PathVariable Long id) {
+<span class="nc" id="L49">        colivingService.deleteColiving(id);</span>
+<span class="nc" id="L50">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
